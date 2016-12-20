@@ -1,5 +1,8 @@
 package robotrace;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 /**
  * Implementation of a camera with a position and orientation. 
  */
@@ -37,7 +40,19 @@ class Camera {
      * Computes eye, center, and up, based on the camera's default mode.
      */
     private void setDefaultMode(GlobalState gs) {
-        
+        double x;
+        double y;
+        double z;
+        double xy;
+        Vector v;
+        center=gs.cnt;
+        z=sin(gs.phi)*gs.vDist;
+        xy=cos(gs.phi)*gs.vDist;
+        x=sin(gs.theta)*xy;
+        y=cos(gs.theta)*xy;
+        eye.x=center.x+x;
+        eye.y=center.y+y;
+        eye.z=center.z+z;
     }
 
     /**
