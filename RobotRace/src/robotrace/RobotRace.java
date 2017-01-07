@@ -210,7 +210,7 @@ public class RobotRace extends Base {
 
     // Draw hierarchy example.
         //drawHierarchy();
-        drawRobotHierarchy();
+        robots[0].draw(gl, glu, glut,0);
         // Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
@@ -310,69 +310,9 @@ public class RobotRace extends Base {
         glut.glutSolidCube(1);
     }
     
-    private void drawRobotHierarchy() {
-        gl.glPushMatrix();
-            gl.glScaled(2,2,2);
-            gl.glTranslated(0,0,0.65);
-            gl.glScaled(0.4,0.10,0.6);
-            glut.glutSolidCube(1);
-            gl.glScaled(5/2,10,5/3);
-            gl.glTranslated(0,0,0.45);
-            drawRobotHead();
-            //glut.glutSolidSphere(0.25, 10, 10);
-            gl.glTranslated(0,0,-0.45);
-            gl.glTranslated(0.15,0,-0.5);
-            drawRobotLeg();
-            gl.glTranslated(-0.3, 0, 0);
-            drawRobotLeg();
-            gl.glTranslated(0.15,0,0.5);
-            whichArm=true;
-            
-            
-        gl.glPopMatrix();
-    }
+   
     
-    private void drawRobotHead() {
-        gl.glScaled(0.4, 0.1, 0.2);
-        gl.glColor3d(255,0,0);
-        glut.glutSolidSphere(1, 10, 10);
-        gl.glColor3d(0,0,0);
-        gl.glScaled(5/2,10,5);
-        gl.glTranslated(0.4,0,0);
-        gl.glRotated(90,0,1,0);
-        drawRobotHeadCone();
-        gl.glRotated(-90,0,1,0);
-        gl.glTranslated(-0.8,0,0);
-        gl.glRotated(-90,0,1,0);
-        drawRobotHeadCone();
-         gl.glRotated(90,0,1,0);
-        gl.glTranslated(0.4,0,0);
-    }
     
-     private void drawRobotHeadCone() {
-        gl.glScaled(0.075,0.075,0.2);
-        glut.glutSolidCone(1, 1, 10, 10);
-        gl.glScaled(40/3, 40/3, 5);
-    }
-     
-    private void drawRobotLeg() {
-        gl.glScaled(0.1,0.1,0.4);
-        glut.glutSolidCube(1);
-        gl.glScaled(10,10,5/2);
-        gl.glTranslated(0,0,-0.4);
-        gl.glScaled(0.1,0.1,0.4);        
-        glut.glutSolidCube(1);
-        gl.glScaled(10,10,5/2);
-        gl.glTranslated(0,0.15,-0.2);
-        gl.glScaled(0.2,0.3,0.1);
-        glut.glutSolidCube(1);
-        gl.glScaled(5,10/3,10);
-        gl.glTranslated(0,-0.15,0.6);
-    }
-    
-    private void drawArm(boolean whichArm) {
-        
-    }
     /**
      * Main program execution body, delegates to an instance of
      * the RobotRace implementation.
