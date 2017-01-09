@@ -210,6 +210,7 @@ public class RobotRace extends Base {
 
     // Draw hierarchy example.
         //drawHierarchy();
+        Vector position = new Vector(0,0,0.65); 
         robots[0].draw(gl, glu, glut,0);
         // Draw the axis frame.
         if (gs.showAxes) {
@@ -219,7 +220,6 @@ public class RobotRace extends Base {
         // Draw the (first) robot.
         gl.glUseProgram(robotShader.getProgramID()); 
         
-        robots[0].draw(gl, glu, glut, 0);
         
         
         // Draw the race track.
