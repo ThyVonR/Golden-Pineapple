@@ -36,8 +36,9 @@ class Robot {
     /**
      * Draws this robot (as a {@code stickfigure} if specified).
      */
-    public void draw(GL2 gl, GLU glu, GLUT glut, float tAnim) {
+    public void draw(GL2 gl, GLU glu, GLUT glut, float tAnim, GlobalState gs) {
         boolean whichArm;// used to determin which arm to draw, true is right, false is left from the point of view of the robot
+        boolean whichLeg;// same as for the arm
         gl.glPushMatrix();
             gl.glScaled(2,2,2);
             gl.glTranslated(0,0,0.65);
@@ -49,9 +50,11 @@ class Robot {
             //glut.glutSolidSphere(0.25, 10, 10);
             gl.glTranslated(0,0,-0.45);
             gl.glTranslated(0.15,0,-0.5);
-            drawRobotLeg(gl, glu, glut, tAnim);
+            whichLeg=true;
+            drawRobotLeg(gl, glu, glut, tAnim, whichLeg, gs);
             gl.glTranslated(-0.3, 0, 0);
-            drawRobotLeg(gl, glu, glut, tAnim);
+            whichLeg=false;
+            drawRobotLeg(gl, glu, glut, tAnim, whichLeg, gs);
             gl.glTranslated(0.15,0,0.5);
             gl.glTranslated(0.2,0,0.3);
             whichArm=true;
@@ -70,12 +73,10 @@ class Robot {
         glut.glutSolidSphere(1, 10, 10);
         gl.glColor3d(0,0,0);
         gl.glScaled(5/2,10,5);
-        position.x=position.x+0.4;
         gl.glTranslated(0.4,0,0);
         gl.glRotated(90,0,1,0);
         drawRobotHeadCone(gl, glu, glut, tAnim);
         gl.glRotated(-90,0,1,0);
-        position.x=position.x-0.8;
         gl.glTranslated(-0.8,0,0);
         gl.glRotated(-90,0,1,0);
         drawRobotHeadCone(gl, glu, glut, tAnim);
@@ -92,9 +93,14 @@ class Robot {
         gl.glPopMatrix();
     }
      
-    private void drawRobotLeg(GL2 gl, GLU glu, GLUT glut, float tAnim) {
+    private void drawRobotLeg(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichLeg, GlobalState gs) {
         gl.glPushMatrix();
         //testSphere(gl, glut);
+        if (whichLeg) {
+            gl.glRotated(20*Math.sin(tAnim),1,0,0);
+        }else{
+            gl.glRotated(20*Math.cos(tAnim),1,0,0);
+        }
         gl.glScaled(0.1,0.1,0.4);
         glut.glutSolidCube(1);
         gl.glScaled(10,10,5/2);
