@@ -1,5 +1,6 @@
 package robotrace;
 
+import static java.lang.Math.cos;
 import static javax.media.opengl.GL2.*;
 import static robotrace.ShaderPrograms.*;
 import static robotrace.Textures.*;
@@ -118,7 +119,7 @@ public class RobotRace extends Base {
         );
         
         // Initialize the terrain
-        terrain = new Terrain();
+        terrain = new Terrain(gs);
     }
     
     /**

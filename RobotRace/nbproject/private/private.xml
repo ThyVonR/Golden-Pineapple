@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/Users/s144488/Desktop/Computer%20Graphics/Assignments/Golden-Pineapple/RobotRace/src/robotrace/Terrain.java</file>
             <file>file:/C:/Users/s144488/Desktop/Computer%20Graphics/Assignments/Golden-Pineapple/RobotRace/src/robotrace/Camera.java</file>
-            <file>jar:file:/C:/Users/s144488/Desktop/Computer%20Graphics/Assignments/Golden-Pineapple/RobotRace/lib/RobotRaceLibrary.jar!/robotrace/GLUTShapes.java</file>
+            <file>file:/C:/Users/s144488/Desktop/Computer%20Graphics/Assignments/Golden-Pineapple/RobotRace/src/robotrace/Robot.java</file>
             <file>file:/C:/Users/s144488/Desktop/Computer%20Graphics/Assignments/Golden-Pineapple/RobotRace/src/robotrace/RobotRace.java</file>
+            <file>jar:file:/C:/Users/s144488/Desktop/Computer%20Graphics/Assignments/Golden-Pineapple/RobotRace/lib/RobotRaceLibrary.jar!/robotrace/GlobalState.java</file>
         </group>
     </open-files>
 </project-private>
