@@ -44,7 +44,6 @@ class Camera {
         double y;
         double z;
         double xy;
-        Vector v;
         center=gs.cnt;
         z=sin(gs.phi)*gs.vDist;
         xy=cos(gs.phi)*gs.vDist;

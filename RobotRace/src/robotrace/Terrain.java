@@ -14,7 +14,7 @@ class Terrain {
     GlobalState gs;
     
     public Terrain(GlobalState gs) {
-        this.gs = gs;
+        this.gs=gs;
     }
     
     public double calcH(double varh1, double varh2) {
