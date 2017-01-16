@@ -72,6 +72,9 @@ public class RobotRace extends Base {
     
     /** Instance of the terrain. */
     private final Terrain terrain;
+    double tRobot;
+    Vector robotPosition;
+    Vector robotDirection;
         
     /**
      * Constructs this robot race by initializing robots,
@@ -79,6 +82,8 @@ public class RobotRace extends Base {
      */
     public RobotRace() {
         // Create a new array of four robots
+        robotPosition = new Vector(0,0,0);
+        robotDirection = new Vector(0,0,0);
         robots = new Robot[4];
         
         // Initialize robot 0
@@ -119,7 +124,7 @@ public class RobotRace extends Base {
         );
         
         // Initialize the terrain
-        terrain = new Terrain();
+        terrain = new Terrain(gs);
     }
     
     /**
@@ -210,7 +215,11 @@ public class RobotRace extends Base {
 
     // Draw hierarchy example.
         //drawHierarchy();
-        Vector position = new Vector(0,0,0.65); 
+        tRobot=(gs.tAnim%10)/10;
+        robotPosition=raceTracks[0].getLanePoint(0, tRobot);
+        robotDirection=raceTracks[0].getLaneTangent(0, tRobot);
+        robots[0].setPosition(robotPosition);
+        robots[0].setDirection(robotDirection);
         robots[0].draw(gl, glu, glut,0, gs);
         // Draw the axis frame.
         if (gs.showAxes) {

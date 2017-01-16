@@ -10,10 +10,10 @@ import javax.media.opengl.glu.GLU;
  */
 class Terrain {
 
+    GlobalState gs;
     
-    
-    public Terrain() {
-        
+    public Terrain(GlobalState gs) {
+        this.gs=gs;
     }
     public double calcH(double varh1, double varh2) {
         double h = 0.3*cos(-0.4*varh1+0.5*varh2) + 0.7*cos(0.2*varh1-0.7*varh2);

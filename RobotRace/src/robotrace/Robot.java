@@ -18,6 +18,7 @@ class Robot {
 
     /** The material from which this robot is built. */
     private final Material material;
+    double directionRobot;
     
     
 
@@ -40,6 +41,8 @@ class Robot {
         boolean whichArm;// used to determin which arm to draw, true is right, false is left from the point of view of the robot
         boolean whichLeg;// same as for the arm
         gl.glPushMatrix();
+            gl.glTranslated(position.x,position.y,position.z);
+            gl.glRotated(directionRobot,0,0,1);
             gl.glScaled(2,2,2);
             gl.glTranslated(0,0,0.65);
             gl.glScaled(0.4,0.10,0.6);
@@ -68,6 +71,7 @@ class Robot {
     
     private void drawRobotHead(GL2 gl, GLU glu, GLUT glut, float tAnim) {
         gl.glPushMatrix();
+        gl.glRotated(directionRobot,0,0,1);
         gl.glScaled(0.4, 0.1, 0.2);
         gl.glColor3d(255,0,0);
         glut.glutSolidSphere(1, 10, 10);
@@ -87,6 +91,7 @@ class Robot {
     
      private void drawRobotHeadCone(GL2 gl, GLU glu, GLUT glut, float tAnim) {
         gl.glPushMatrix();
+        gl.glRotated(directionRobot,0,0,1);
         gl.glScaled(0.075,0.075,0.2);
         glut.glutSolidCone(1, 1, 10, 10);
         gl.glScaled(40/3, 40/3, 5);
@@ -95,7 +100,8 @@ class Robot {
      
     private void drawRobotLeg(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichLeg, GlobalState gs) {
         gl.glPushMatrix();
-        //testSphere(gl, glut);
+        //testSphere(gl, glut
+        gl.glRotated(directionRobot,0,0,1);
         if (whichLeg) {
             gl.glRotated(20*Math.sin(tAnim),1,0,0);
         }else{
@@ -125,6 +131,7 @@ class Robot {
     }
     private void drawArm(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichArm ) {
         gl.glPushMatrix();
+        gl.glRotated(directionRobot,0,0,1);
         gl.glScaled(0.1, 0.1, 0.1);
         gl.glColor3d(0,255,0);
         glut.glutSolidSphere(1,10,10);
@@ -160,6 +167,7 @@ class Robot {
     }
     private void drawSecondArm(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichArm) {
         gl.glPushMatrix();
+        gl.glRotated(directionRobot,0,0,1);
         gl.glTranslated(0,0,-0.2);
         gl.glScaled(0.1,0.1,0.4);
         glut.glutSolidCube(1);
@@ -171,5 +179,12 @@ class Robot {
         gl.glTranslated(0,0,0.45);
         gl.glPopMatrix();
     }
-    
+    public void setPosition(Vector position) {
+        this.position = position;
+    }
+    public void setDirection(Vector direction) {
+        this.direction = direction;
+        directionRobot=Math.atan(position.x/position.y);
+        
+    }
 }
