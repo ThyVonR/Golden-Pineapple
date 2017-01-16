@@ -59,10 +59,12 @@ import static robotrace.Textures.*;
  * to the GLUT object.
  */
 public class RobotRace extends Base {
-    
     /** Array of the four robots. */
     private final Robot[] robots;
-    
+    //used for chosing which arm to make
+    //true=left
+    //false=right
+    private boolean whichArm;
     /** Instance of the camera. */
     private final Camera camera;
     
@@ -71,14 +73,18 @@ public class RobotRace extends Base {
     
     /** Instance of the terrain. */
     private final Terrain terrain;
+    double tRobot;
+    Vector robotPosition;
+    Vector robotDirection;
         
     /**
      * Constructs this robot race by initializing robots,
      * camera, track, and terrain.
      */
     public RobotRace() {
-        
         // Create a new array of four robots
+        robotPosition = new Vector(0,0,0);
+        robotDirection = new Vector(0,0,0);
         robots = new Robot[4];
         
         // Initialize robot 0
@@ -210,16 +216,20 @@ public class RobotRace extends Base {
 
     // Draw hierarchy example.
         //drawHierarchy();
-        
+        tRobot=(gs.tAnim%10)/10;
+        robotPosition=raceTracks[0].getLanePoint(0, tRobot);
+        robotDirection=raceTracks[0].getLaneTangent(0, tRobot);
+        robots[0].setPosition(robotPosition);
+        robots[0].setDirection(robotDirection);
+        robots[0].draw(gl, glu, glut,0, gs);
         // Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
         }
-        
+        raceTracks[0].draw(gl,glu,glut);
         // Draw the (first) robot.
         gl.glUseProgram(robotShader.getProgramID()); 
         
-        robots[0].draw(gl, glu, glut, 0);
         
         
         // Draw the race track.
@@ -228,7 +238,7 @@ public class RobotRace extends Base {
         
         // Draw the terrain.
         gl.glUseProgram(terrainShader.getProgramID());
-        terrain.draw(gl, glu, glut);
+        //terrain.draw(gl, glu, glut);
         reportError("terrain:");
         
         
@@ -309,6 +319,8 @@ public class RobotRace extends Base {
         gl.glScaled(2, 1, 1);
         glut.glutSolidCube(1);
     }
+    
+   
     
     
     /**
