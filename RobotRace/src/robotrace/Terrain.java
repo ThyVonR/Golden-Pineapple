@@ -32,6 +32,7 @@ class Terrain {
      * 0.3*cos(-0.4*(i-0.5*tileSize)-0.5*(j-0.5*tileSize)) + 0.7*cos(0.2*(i-0.5*tileSize)-0.7*(j-0.5*tileSize))
      */
     public void draw(GL2 gl, GLU glu, GLUT glut) {
+        gl.glPushMatrix();
         Vector minHPlane = new Vector(-20,-20,-1);
         Vector maxHPlane = new Vector(20,20,1);
         double tileSize =0.5;
@@ -70,5 +71,7 @@ class Terrain {
             gl.glTranslated(-40,tileSize,0);
             i=-20;
         }
+        gl.glPopMatrix();
     }
+
 }
