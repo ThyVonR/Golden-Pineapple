@@ -12,7 +12,7 @@ class Terrain {
     GlobalState gs;
     double[] treeArray;
     double[] randomCoord;
-    int trees = 20;
+    int trees = 50;
     
     public Terrain(GlobalState gs) {
         this.gs = gs;
@@ -93,21 +93,34 @@ class Terrain {
         
     gl.glTranslated(20,-20,0.5);
     //width = (treeArray[tree] + 0.9), height = (treeArray[tree+1] + 0.75), color = (treeArray[tree+2] + 0.75)
+    double maxXplus = 10;
+    double maxXmin = -10;
+    double minXplus = 3;
+    double minXmin = -3;
+    double maxYplus = 10;
+    double maxYmin = -10;
+    double minYplus = 3;
+    double minYmin = -3;
+    
+    //if (((randomCoord[tree] > minXmin && randomCoord[tree] < minXplus) || randomCoord[tree] < maxXmin || randomCoord[tree] > maxXplus) && ((randomCoord[tree+1] > minYmin && randomCoord[tree+1] < minYplus) || randomCoord[tree+1] < maxYmin || randomCoord[tree+1] > maxYplus) && (calcH(randomCoord[tree],randomCoord[tree+1])>0.5))
+    //((randomCoord[tree+1] > minYmin && randomCoord[tree+1] < minYplus) || randomCoord[tree+1] < maxYmin || randomCoord[tree+1] > maxYplus)
+
+    
     for (int tree=0; tree<trees; tree++) {
         gl.glPushMatrix();
-        gl.glTranslated(randomCoord[tree],randomCoord[tree+1],0);
-        if (calcH(randomCoord[tree],randomCoord[tree+1])>0.5){
-        gl.glColor3d(0.8*(treeArray[tree+2] + 0.75),0.5*(treeArray[tree+2] + 0.75),0.4*(treeArray[tree+2] + 0.75));
-        glut.glutSolidCylinder(0.5*(treeArray[tree] + 0.9),1.5*(treeArray[tree+1] + 0.75),10,10);
-        gl.glTranslated(0,0,0.5*(treeArray[tree+1] + 0.75));
-        gl.glColor3d(0.1,0.6*(treeArray[tree+2] + 0.75),0.1);
-        glut.glutSolidCone(1*(treeArray[tree] + 0.9),2*(treeArray[tree+1] + 0.75),10,10);
-        gl.glTranslated(0,0,1*(treeArray[tree+1] + 0.75));
-        glut.glutSolidCone(0.75*(treeArray[tree] + 0.9),1.5*(treeArray[tree+1] + 0.75),10,10);
-        gl.glPopMatrix();
-        } else{
-            gl.glPopMatrix();
+            gl.glTranslated(randomCoord[tree],randomCoord[tree+1],0);
+            if (((randomCoord[tree] > minXmin && randomCoord[tree] < minXplus) || randomCoord[tree] < maxXmin || randomCoord[tree] > maxXplus) && ((randomCoord[tree+1] > minYmin && randomCoord[tree+1] < minYplus) || randomCoord[tree+1] < maxYmin || randomCoord[tree+1] > maxYplus) && (calcH(randomCoord[tree],randomCoord[tree+1])>0.5)) {
+                        gl.glColor3d(0.8*(treeArray[tree+2] + 0.75),0.5*(treeArray[tree+2] + 0.75),0.4*(treeArray[tree+2] + 0.75));
+                        glut.glutSolidCylinder(0.5*(treeArray[tree] + 0.9),1.5*(treeArray[tree+1] + 0.75),10,10);
+                        gl.glTranslated(0,0,0.5*(treeArray[tree+1] + 0.75));
+                        gl.glColor3d(0.1,0.6*(treeArray[tree+2] + 0.75),0.1);
+                        glut.glutSolidCone(1*(treeArray[tree] + 0.9),2*(treeArray[tree+1] + 0.75),10,10);
+                        gl.glTranslated(0,0,1*(treeArray[tree+1] + 0.75));
+                        glut.glutSolidCone(0.75*(treeArray[tree] + 0.9),1.5*(treeArray[tree+1] + 0.75),10,10);
+                        gl.glPopMatrix();
+            } else{
+                gl.glPopMatrix();
+            }
         }
-    }
     }
 }
