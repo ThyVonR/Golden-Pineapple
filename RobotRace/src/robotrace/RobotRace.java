@@ -1,6 +1,5 @@
 package robotrace;
 
-import static java.lang.Math.cos;
 import static javax.media.opengl.GL2.*;
 import static robotrace.ShaderPrograms.*;
 import static robotrace.Textures.*;
@@ -238,7 +237,7 @@ public class RobotRace extends Base {
         
         // Draw the terrain.
         gl.glUseProgram(terrainShader.getProgramID());
-        //terrain.draw(gl, glu, glut);
+        terrain.draw(gl, glu, glut);
         reportError("terrain:");
         
         
