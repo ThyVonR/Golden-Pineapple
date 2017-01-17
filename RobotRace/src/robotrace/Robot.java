@@ -10,7 +10,7 @@ import static javax.media.opengl.GL2.*;
 * Represents a Robot, to be implemented according to the Assignments.
 */
 class Robot {
-    
+    GlobalState gs;
     /** The position of the robot. */
     public Vector position = new Vector(0, 0, 0);
     
@@ -32,7 +32,8 @@ class Robot {
     /**
      * Constructs the robot with initial parameters.
      */
-    public Robot(Material material, double widthX, double widthY, double height) {
+    public Robot(GlobalState gs, Material material, double widthX, double widthY, double height) {
+        this.gs = gs;
         this.material = material;
         this.height=height;
         this.widthX=widthX;
@@ -60,7 +61,7 @@ class Robot {
         /**
      * Draws this robot (as a {@code stickfigure} if specified).
      */
-    public void draw(GL2 gl, GLU glu, GLUT glut, float tAnim, GlobalState gs ) {
+    public void draw(GL2 gl, GLU glu, GLUT glut, GlobalState gs ) {
         boolean whichArm;// used to determin which arm to draw, true is right, false is left from the point of view of the robot
         boolean whichLeg;// same as for the arm
         gl.glPushMatrix();
@@ -72,64 +73,66 @@ class Robot {
             glut.glutSolidCube(1);
             gl.glScaled(1/scaleX(0.4),1/scaleY(0.1),1/scaleZ(0.6));
             gl.glTranslated(0,0,scaleZ(0.45));
-            drawRobotHead(gl, glu, glut, tAnim);
+            drawRobotHead(gl, glu, glut);
             //glut.glutSolidSphere(0.25, 10, 10);
             gl.glTranslated(0,0,scaleZ(-0.45));
             gl.glTranslated(scaleX(0.15),0,scaleZ(-0.5));
             whichLeg=true;
-            drawRobotLeg(gl, glu, glut, tAnim, whichLeg, gs);
+            drawRobotLeg(gl, glu, glut, whichLeg, gs);
             gl.glTranslated(scaleX(-0.3), 0, 0);
             whichLeg=false;
-            drawRobotLeg(gl, glu, glut, tAnim, whichLeg, gs);
+            drawRobotLeg(gl, glu, glut, whichLeg, gs);
             gl.glTranslated(scaleX(0.15),0,scaleZ(0.5));
             gl.glTranslated(scaleX(0.2),0,scaleZ(0.3));
             whichArm=true;
-            drawArm(gl, glu, glut, tAnim, whichArm);
+            drawArm(gl, glu, glut, whichArm);
             whichArm=false;
             gl.glTranslated(scaleX(-0.4),0,0);
-            drawArm(gl, glu, glut, tAnim, whichArm);
+            drawArm(gl, glu, glut, whichArm);
             
         gl.glPopMatrix();
     }
     
-    private void drawRobotHead(GL2 gl, GLU glu, GLUT glut, float tAnim) {
+    private void drawRobotHead(GL2 gl, GLU glu, GLUT glut) {
         gl.glPushMatrix();
-        //gl.glRotated(directionRobot,0,0,1);
+        gl.glTranslated(0,0,scaleZ(-0.1));
+        gl.glRotated(10*Math.sin(5*gs.tAnim),1,0,0);
+        gl.glTranslated(0,0,scaleZ(0.1));
         gl.glScaled(scaleX(0.4),scaleY(0.1), scaleZ(0.2));
         gl.glColor3d(255,0,0);
         glut.glutSolidSphere(1, 10, 10);
         gl.glColor3d(0,0,0);
         gl.glScaled(1/scaleX(0.4),1/scaleY(0.1),1/scaleZ(0.2));
-        gl.glTranslated(scaleX(0.4),0,0);
+        gl.glTranslated(scaleX(0.3),0,0);
         gl.glRotated(90,0,1,0);
-        drawRobotHeadCone(gl, glu, glut, tAnim);
+        drawRobotHeadCone(gl, glu, glut);
         gl.glRotated(-90,0,1,0);
-        gl.glTranslated(scaleX(-0.8),0,0);
+        gl.glTranslated(scaleX(-0.6),0,0);
         gl.glRotated(-90,0,1,0);
-        drawRobotHeadCone(gl, glu, glut, tAnim);
+        drawRobotHeadCone(gl, glu, glut);
          gl.glRotated(90,0,1,0);
-        gl.glTranslated(scaleX(0.4),0,0);
+        gl.glTranslated(scaleX(0.3),0,0);
         gl.glPopMatrix();
     }
     
-     private void drawRobotHeadCone(GL2 gl, GLU glu, GLUT glut, float tAnim) {
+     private void drawRobotHeadCone(GL2 gl, GLU glu, GLUT glut) {
         gl.glPushMatrix();
-        //gl.glRotated(directionRobot,0,0,1);
         gl.glScaled(scaleX(0.075),scaleY(0.075),scaleZ(0.2));
         glut.glutSolidCone(1, 1, 10, 10);
         gl.glScaled(1/scaleX(0.075),1/scaleY(0.075),1/scaleZ(0.2));
         gl.glPopMatrix();
     }
      
-    private void drawRobotLeg(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichLeg, GlobalState gs) {
+    private void drawRobotLeg(GL2 gl, GLU glu, GLUT glut, boolean whichLeg, GlobalState gs) {
         gl.glPushMatrix();
-        //gl.glRotated(directionRobot,0,0,1);
         //testSphere(gl, glut);
+        gl.glTranslated(0,0,scaleZ(0.2));
         if (whichLeg) {
-            gl.glRotated(20*Math.sin(tAnim),1,0,0);
+            gl.glRotated(45*Math.sin(5*gs.tAnim),1,0,0);
         }else{
-            gl.glRotated(20*Math.cos(tAnim),1,0,0);
+            gl.glRotated(-45*Math.sin(5*gs.tAnim),1,0,0);
         }
+        gl.glTranslated(0,0,scaleZ(-0.2));
         gl.glScaled(scaleX(0.1),scaleY(0.1),scaleZ(0.4));
         glut.glutSolidCube(1);
         gl.glScaled(1/scaleX(0.1),1/scaleY(0.1),1/scaleZ(0.4));
@@ -149,21 +152,21 @@ class Robot {
     
     private void testSphere(GL2 gl, GLUT glut) {
         gl.glColor3d(255, 0, 0);
-        //gl.glRotated(directionRobot,0,0,1);
         glut.glutSolidSphere(0.125, 10, 10);
         gl.glColor3d(0, 0, 0);
     }
-    private void drawArm(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichArm ) {
+    private void drawArm(GL2 gl, GLU glu, GLUT glut, boolean whichArm ) {
         gl.glPushMatrix();
-        //gl.glRotated(directionRobot,0,0,1);
         gl.glScaled(scaleX(0.1),scaleY(0.1),scaleZ(0.1));
         gl.glColor3d(0,255,0);
         glut.glutSolidSphere(1,10,10);
         gl.glScaled(1/scaleX(0.1),1/scaleY(0.1),1/scaleZ(0.1));
         if (whichArm) {
-            gl.glRotated(-22,0,1,0); 
+            gl.glRotated(-30*Math.sin(5*gs.tAnim),1,0,0);
+            gl.glRotated(-22,0,1,0);
         }else {
-            gl.glRotated(22,0,1,0); 
+            gl.glRotated(30*Math.sin(5*gs.tAnim),1,0,0);
+            gl.glRotated(22,0,1,0);
         }
         gl.glTranslated(0,0,scaleZ(-0.2));
         gl.glScaled(scaleX(0.1),scaleY(0.1),scaleZ(0.4));
@@ -175,7 +178,7 @@ class Robot {
         }else {
             gl.glRotated(-22,0,1,0); 
         }
-        drawSecondArm(gl, glu, glut, tAnim, whichArm);
+        drawSecondArm(gl, glu, glut, whichArm);
         if (whichArm){
             gl.glRotated(-22,0,1,0);
         }else {
@@ -189,9 +192,8 @@ class Robot {
         }
         gl.glPopMatrix();
     }
-    private void drawSecondArm(GL2 gl, GLU glu, GLUT glut, float tAnim, boolean whichArm) {
+    private void drawSecondArm(GL2 gl, GLU glu, GLUT glut, boolean whichArm) {
         gl.glPushMatrix();
-        //gl.glRotated(directionRobot,0,0,1);
         gl.glTranslated(0,0,scaleZ(-0.2));
         gl.glScaled(scaleX(0.1),scaleY(0.1),scaleZ(0.4));
         glut.glutSolidCube(1);

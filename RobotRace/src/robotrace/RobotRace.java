@@ -99,17 +99,17 @@ public class RobotRace extends Base {
         raceTracks[0] = new ParametricTrack();
         
                 // Initialize robot 0
-        robots[0] = new Robot(Material.GOLD, 0.7,0.1,1.65);
+        robots[0] = new Robot(gs, Material.GOLD, 0.7,0.1,1.65);
                
         
         // Initialize robot 1
-        robots[1] = new Robot(Material.SILVER, 0.7,0.1,1.65);
+        robots[1] = new Robot(gs, Material.SILVER, 0.7,0.1,1.65);
         
         // Initialize robot 2
-        robots[2] = new Robot(Material.WOOD, 0.7,0.1,1.65);
+        robots[2] = new Robot(gs, Material.WOOD, 0.7,0.1,1.65);
 
         // Initialize robot 3
-        robots[3] = new Robot(Material.ORANGE, 0.7,0.1,1.65);
+        robots[3] = new Robot(gs, Material.ORANGE, 0.7,0.1,1.65);
         // Track 2
         float g = 3.5f;
         raceTracks[1] = new BezierTrack(
@@ -213,7 +213,7 @@ public class RobotRace extends Base {
         for (int i=0;i<4;i++) {
             robots[i].setPosition(raceTracks[0].getLanePoint(i, robots[i].nextT(gs.tAnim)));
             robots[i].setDirection(raceTracks[0].getLaneTangent(i,robots[i].nextT(gs.tAnim)));
-            robots[i].draw(gl, glu, glut,0, gs);
+            robots[i].draw(gl, glu, glut, gs);
         }
 
         // Draw the axis frame.
