@@ -1,5 +1,6 @@
 package robotrace;
 
+import static java.lang.Math.cos;
 import static javax.media.opengl.GL2.*;
 import static robotrace.ShaderPrograms.*;
 import static robotrace.Textures.*;
@@ -86,25 +87,7 @@ public class RobotRace extends Base {
         robotDirection = new Vector(0,0,0);
         robots = new Robot[4];
         
-        // Initialize robot 0
-        robots[0] = new Robot(Material.GOLD
-                
-        );
-        
-        // Initialize robot 1
-        robots[1] = new Robot(Material.SILVER
-              
-        );
-        
-        // Initialize robot 2
-        robots[2] = new Robot(Material.WOOD
-              
-        );
 
-        // Initialize robot 3
-        robots[3] = new Robot(Material.ORANGE
-                
-        );
         
         // Initialize the camera
         camera = new Camera();
@@ -115,6 +98,18 @@ public class RobotRace extends Base {
         // Track 1
         raceTracks[0] = new ParametricTrack();
         
+                // Initialize robot 0
+        robots[0] = new Robot(Material.GOLD, 0.7,0.1,1.65);
+               
+        
+        // Initialize robot 1
+        robots[1] = new Robot(Material.SILVER, 0.7,0.1,1.65);
+        
+        // Initialize robot 2
+        robots[2] = new Robot(Material.WOOD, 0.7,0.1,1.65);
+
+        // Initialize robot 3
+        robots[3] = new Robot(Material.ORANGE, 0.7,0.1,1.65);
         // Track 2
         float g = 3.5f;
         raceTracks[1] = new BezierTrack(
@@ -215,12 +210,12 @@ public class RobotRace extends Base {
 
     // Draw hierarchy example.
         //drawHierarchy();
-        tRobot=(gs.tAnim%10)/10;
-        robotPosition=raceTracks[0].getLanePoint(0, tRobot);
-        robotDirection=raceTracks[0].getLaneTangent(0, tRobot);
-        robots[0].setPosition(robotPosition);
-        robots[0].setDirection(robotDirection);
-        robots[0].draw(gl, glu, glut,0, gs);
+        for (int i=0;i<4;i++) {
+            robots[i].setPosition(raceTracks[0].getLanePoint(i, robots[i].nextT(gs.tAnim)));
+            robots[i].setDirection(raceTracks[0].getLaneTangent(i,robots[i].nextT(gs.tAnim)));
+            robots[i].draw(gl, glu, glut,0, gs);
+        }
+
         // Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
