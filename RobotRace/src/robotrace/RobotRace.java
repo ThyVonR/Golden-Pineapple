@@ -210,21 +210,12 @@ public class RobotRace extends Base {
 
     // Draw hierarchy example.
         //drawHierarchy();
-        for (int i=0;i<4;i++) {
-            robots[i].setPosition(raceTracks[0].getLanePoint(i, robots[i].nextT(gs.tAnim)));
-            robots[i].setDirection(raceTracks[0].getLaneTangent(i,robots[i].nextT(gs.tAnim)));
-            robots[i].draw(gl, glu, glut, gs);
-        }
-
+        
         // Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
         }
         raceTracks[0].draw(gl,glu,glut);
-        // Draw the (first) robot.
-        gl.glUseProgram(robotShader.getProgramID()); 
-        
-        
         
         // Draw the race track.
         gl.glUseProgram(trackShader.getProgramID());
@@ -234,8 +225,14 @@ public class RobotRace extends Base {
         gl.glUseProgram(terrainShader.getProgramID());
         terrain.draw(gl, glu, glut);
         reportError("terrain:");
-        
-        
+         
+        // Draw the (first) robot.
+        gl.glUseProgram(robotShader.getProgramID()); 
+        for (int i=0;i<4;i++) {
+            robots[i].setPosition(raceTracks[0].getLanePoint(i, robots[i].nextT(gs.tAnim)));
+            robots[i].setDirection(raceTracks[0].getLaneTangent(i,robots[i].nextT(gs.tAnim)));
+            robots[i].draw(gl, glu, glut, gs);
+        }
     }
     
     /**
@@ -243,18 +240,20 @@ public class RobotRace extends Base {
      * and origin (yellow).
      */
     public void drawAxisFrame() {
-        gl.glColor3d(255,0,0);
-        gl.glRotated(90,0,1,0);
-        drawArrow();
-        gl.glRotated(-90,0,1,0);
-        gl.glColor3d(0,255,0);
-        gl.glRotated(-90,1,0,0);
-        drawArrow();
-        gl.glRotated(90,1,0,0);
-        gl.glColor3d(0,0,255);
-        drawArrow();
-        gl.glColor3d(255,255, 0);
-        glut.glutSolidSphere(0.10, 10, 10);
+        gl.glPushMatrix();
+            gl.glColor3d(255,0,0);
+            gl.glRotated(90,0,1,0);
+            drawArrow();
+            gl.glRotated(-90,0,1,0);
+            gl.glColor3d(0,255,0);
+            gl.glRotated(-90,1,0,0);
+            drawArrow();
+            gl.glRotated(90,1,0,0);
+            gl.glColor3d(0,0,255);
+            drawArrow();
+            gl.glColor3d(255,255, 0);
+            glut.glutSolidSphere(0.10, 10, 10);
+        gl.glPopMatrix();
     }
     
     /**

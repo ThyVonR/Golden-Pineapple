@@ -1,7 +1,9 @@
 package robotrace;
 
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.nio.FloatBuffer;
 import java.util.Random;
+import static javax.media.opengl.GL.GL_FRONT_AND_BACK;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 import static javax.media.opengl.GL2.*;
@@ -62,6 +64,12 @@ class Robot {
      * Draws this robot (as a {@code stickfigure} if specified).
      */
     public void draw(GL2 gl, GLU glu, GLUT glut, GlobalState gs ) {
+        FloatBuffer matDiffuse = FloatBuffer.wrap(material.diffuse);
+        FloatBuffer matSpecular = FloatBuffer.wrap(material.specular);
+        gl.glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, matDiffuse);
+        gl.glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, matSpecular);
+        gl.glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material.shininess);
+        
         boolean whichArm;// used to determin which arm to draw, true is right, false is left from the point of view of the robot
         boolean whichLeg;// same as for the arm
         gl.glPushMatrix();
@@ -151,9 +159,11 @@ class Robot {
     }
     
     private void testSphere(GL2 gl, GLUT glut) {
-        gl.glColor3d(255, 0, 0);
-        glut.glutSolidSphere(0.125, 10, 10);
-        gl.glColor3d(0, 0, 0);
+        gl.glPushMatrix();
+            gl.glColor3d(255, 0, 0);
+            glut.glutSolidSphere(0.125, 10, 10);
+            gl.glColor3d(0, 0, 0);
+        gl.glPopMatrix();
     }
     private void drawArm(GL2 gl, GLU glu, GLUT glut, boolean whichArm ) {
         gl.glPushMatrix();

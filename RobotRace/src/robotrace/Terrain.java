@@ -2,7 +2,10 @@ package robotrace;
 
 import com.jogamp.opengl.util.gl2.GLUT;
 import static java.lang.Math.cos;
+import java.nio.FloatBuffer;
+import static javax.media.opengl.GL.GL_FRONT_AND_BACK;
 import javax.media.opengl.GL2;
+import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_AMBIENT;
 import javax.media.opengl.glu.GLU;
 
 /**
@@ -12,7 +15,7 @@ class Terrain {
     GlobalState gs;
     double[] treeArray;
     double[] randomCoord;
-    int trees = 50;
+    int trees = 500;
     
     public Terrain(GlobalState gs) {
         this.gs = gs;
@@ -52,6 +55,12 @@ class Terrain {
      * 0.3*cos(-0.4*(i-0.5*tileSize)-0.5*(j-0.5*tileSize)) + 0.7*cos(0.2*(i-0.5*tileSize)-0.7*(j-0.5*tileSize))
      */
     public void draw(GL2 gl, GLU glu, GLUT glut) {
+        float[] ambient = new float[] {0.0f, 1.0f, 1.0f};
+        FloatBuffer matAmbient = FloatBuffer.wrap(ambient);
+        gl.glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, matAmbient);
+
+        
+        
         gl.glPushMatrix();
         Vector minHPlane = new Vector(-20,-20,-1);
         Vector maxHPlane = new Vector(20,20,1);
